@@ -5,7 +5,7 @@ black[pieces]
 
 board[,[tiles]]
 
-Current Turn
+isWhiteTurn bool
 
 Selected piece
 
@@ -19,8 +19,8 @@ piece{
 
 Move{
 	iterators[Vector 2(x,y)]
-	jumps pieces: bool
-	infinit: bool
+	jumpsPieces: bool
+	infinite: bool
 }
 
 Vector 2{
@@ -28,13 +28,34 @@ Vector 2{
 	y
 }
 
+Hard code objects for pawn, rook, knight, bishop
+
 Tile{
 	x
 	y
 	piece: null or piece
 }
 
-Select Piece(tile){
+main(){
+    NewGame
+    if iswhiteturn true{
+        turn, but pass white values, also make sure piece is white
+    }
+
+    if iswhiteturn false{
+        turn, but pass black values, also make sure piece is black
+    }
+}
+
+
+NewGame(){
+    createboard()
+    createPieces()
+
+
+}
+
+SelectPiece(tile){
 	piece
 }
 
@@ -53,11 +74,17 @@ CreatePieces(){
 	generate pieces and add them to the board
 }
 
-Hard code objects for pawn, rook, knight, bishop
 
-Illegal move detector- prevent people from moving in a way that would check the king.
 
-Check- when the opposing player moves check to see if the king is then put in check ask all enemy pieces if they can attack the king
+check (opposingTeam[pieces], king){
+    prevent people from moving in a way that would check their own king.
+    for{
+        if piececanmoveTo() true{
+            true
+        }
+    }
+    false
+}
 
 Check Mate check if
 
