@@ -1,9 +1,9 @@
 class Move {
-    constructor(newIterators, newType, newCanMoveThrough, newRepeating, firstMove){
-        this.iterators= [Vector2]
-        this.type = String
-        this.canMoveThrough = Boolean
-        this.repeating= Boolean
-        this.firstMove = Boolean
+    constructor(newIterators, newType, newCanMoveOver, newIsRepeating, newFirstMove){
+        this.iterators= newIterators
+        this.type = newType
+        this.canMoveOver = newCanMoveOver
+        this.isRepeating= newIsRepeating
+        this.firstMove = newFirstMove
     }
 }

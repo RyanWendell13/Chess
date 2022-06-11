@@ -1,8 +1,8 @@
 class Tile {
-    constructor(newPos, newElement){
+    constructor(newPos, newElement, newColor){
         this.pos = newPos
         this.element = newElement
-
+        this.color = newColor
         this.piece = null
     }
 
