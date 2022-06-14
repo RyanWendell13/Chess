@@ -1,5 +1,4 @@
 class Piece {
-    
     constructor(newInfo, newTile, newElement, newWhite){
         this.info = newInfo,
         this.tile = newTile,

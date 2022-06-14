@@ -4,7 +4,7 @@ let rook = new PieceInfo(['./images/Rook.png'], 0, [new Move([new Vector2(0,1)],
 
 let knight = new PieceInfo(['./images/Knight.png', './images/KnightVariation.png'], 1, [new Move([new Vector2(1,2)], 'Standard', true, false, false),new Move([new Vector2(-1,2)], 'Standard', true, false, false),new Move([new Vector2(2,1)], 'Standard', true, false, false),new Move([new Vector2(2,-1)], 'Standard', true, false, false),new Move([new Vector2(1,-2)], 'Standard', true, false, false),new Move([new Vector2(-1,-2)], 'Standard', true, false, false),new Move([new Vector2(-2,1)], 'Standard', true, false, false),new Move([new Vector2(-2,-1)], 'Standard', true, false, false)])
 
-let bishop = new PieceInfo(['./images/Bishop.png'], 1, [new Move([new Vector2(1,1)], 'Standard', false, true, false),new Move([new Vector2(1,-1)], 'Standard', false, false, true, false), new Move([new Vector2(-1,-1)], 'Standard', false, false, true, false),new Move([new Vector2(-1,1)], 'Standard', false, false, true, false)])
+let bishop = new PieceInfo(['./images/Bishop.png'], 1, [new Move([new Vector2(1,1)], 'Standard', false, true, false),new Move([new Vector2(1,-1)], 'Standard', false, true, false), new Move([new Vector2(-1,-1)], 'Standard', false, true, false),new Move([new Vector2(-1,1)], 'Standard', false, true, false)])
 
 let queen = new PieceInfo(['./images/Queen.png'], 0, [new Move([new Vector2(0,1)], 'Standard', false, true, false),new Move([new Vector2(1,1)], 'Standard', false, true, false),new Move([new Vector2(1,0)], 'Standard', false, true, false),new Move([new Vector2(1,-1)], 'Standard', false, true, false),new Move([new Vector2(0,-1)], 'Standard', false, true, false),new Move([new Vector2(-1,-1)], 'Standard', false, true, false),new Move([new Vector2(-1,0)], 'Standard', false, true, false),new Move([new Vector2(-1,1)], 'Standard', false, true, false)])
 
@@ -15,17 +15,16 @@ let whitePieces =Array()
 let blackPieces = Array()
 let possibleMoves = Array()
 let pieceSelected
-
 let whiteTurn = true
-
-
+let pawnPromoting = false
+let whitePossibleChecks = Array(Array())
+let blackPossibleChecks = Array(Array())
+let playerOneText = document.getElementById('PlayerOneText')
+let playerTwoText = document.getElementById('PlayerTwoText')
 function Main(){
     board = CreateBoard()
     SetupPieces()
-}
-
-function Check(){
-
+    playerOneText.style.borderColor = 'black'
 }
 
 function CreateBoard(){
@@ -52,8 +51,6 @@ function CreateBoard(){
             newTile.element.style.marginLeft = (i*42.5)+((8*42.5)/4)+'px'
             newTile.element.style.marginTop = (j*42.5)+80+'px'
             tempBoard[i][j] = newTile
-
-            
         }
         if(isWhite == true){
             isWhite = false
@@ -70,33 +67,27 @@ function SetupPieces(){
     for(let i = 0; i < 8; i++){
         whitePieces.push(CreatePiece(pawn, 0, board[i][6], document.createElement('img')))
     }
-
     whitePieces.push(CreatePiece(rook, 0, board[0][7], document.createElement('img')))
     whitePieces.push(CreatePiece(rook, 0, board[7][7], document.createElement('img')))
 
-
-    whitePieces.push(CreatePiece(knight, 1, board[1][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(knight, 0, board[1][7], document.createElement('img')))
     whitePieces.push(CreatePiece(knight, 0, board[6][7], document.createElement('img')))
 
     whitePieces.push(CreatePiece(bishop, 0, board[2][7], document.createElement('img')))
     whitePieces.push(CreatePiece(bishop, 0, board[5][7], document.createElement('img')))
 
-    whitePieces.push(CreatePiece(queen, 0, board[3][7], document.createElement('img')))
-    whitePieces.push(CreatePiece(king, 0, board[4][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(queen, 0, board[4][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(king, 0, board[3][7], document.createElement('img')))
     
-
-
     //Black Pieces
     for(let i = 0; i < 8; i++){
         blackPieces.push(CreatePiece(pawn, 0, board[i][1], document.createElement('img')))
     }
-
     blackPieces.push(CreatePiece(rook, 0, board[0][0], document.createElement('img')))
     blackPieces.push(CreatePiece(rook, 0, board[7][0], document.createElement('img')))
 
-
     blackPieces.push(CreatePiece(knight, 1, board[1][0], document.createElement('img')))
-    blackPieces.push(CreatePiece(knight, 0, board[6][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(knight, 1, board[6][0], document.createElement('img')))
 
     blackPieces.push(CreatePiece(bishop, 0, board[2][0], document.createElement('img')))
     blackPieces.push(CreatePiece(bishop, 0, board[5][0], document.createElement('img')))
@@ -105,11 +96,10 @@ function SetupPieces(){
     blackPieces.push(CreatePiece(king, 0, board[3][0], document.createElement('img')))
 
     blackPieces.forEach(piece => {
-        piece.element.style.filter = "brightness(50%)"
+        piece.element.style.filter = "brightness(60%)"
     })
-    
-
 }
+
 function CreatePiece(type, imageIndex, boardPos, element){
     let newPiece = new Piece(type, boardPos, element)
     newPiece.element.src = newPiece.info.image[imageIndex]
@@ -123,7 +113,6 @@ function CreatePiece(type, imageIndex, boardPos, element){
 }
 
 function Clicked(element){
-
     let obj = FindElement(element)
     let clickedTile
     if(obj.pos == null){
@@ -132,42 +121,61 @@ function Clicked(element){
     else{
         clickedTile = obj
     }
-
-
     console.log(clickedTile)
     if(clickedTile.piece != null){
-        if(clickedTile.piece != pieceSelected){
-            DeletePossibleMoves()
-            console.log(blackPieces.includes(clickedTile.piece))
-            if(whiteTurn == true && blackPieces.includes(clickedTile.piece) == false){
+        if(clickedTile.piece != pieceSelected ){
+            if((whiteTurn == true && blackPieces.includes(clickedTile.piece) == false) || (whiteTurn == false && whitePieces.includes(clickedTile.piece) == false)){
+                DeletePossibleMoves()
                 pieceSelected = clickedTile.piece
                 CalculatePossibleMoves(pieceSelected)
             }
-            else if(whiteTurn == false && whitePieces.includes(clickedTile.piece) == false){
-                pieceSelected = clickedTile.piece
-                CalculatePossibleMoves(pieceSelected)
+            else if (pieceSelected != null && possibleMoves.includes(clickedTile)){
+                DeletePiece(clickedTile.piece)
+                MovePiece(pieceSelected, clickedTile)
             }
         }
     }
+    else if(pieceSelected != null && possibleMoves.includes(clickedTile)){
+            MovePiece(pieceSelected, clickedTile)
+    }
+}
 
-    else if(pieceSelected != null){
-        if (possibleMoves.includes(clickedTile)){
-            clickedTile.element.appendChild(pieceSelected.element)
-            DeletePossibleMoves()
-            pieceSelected.tile.piece = null
-            pieceSelected.tile = clickedTile
-            pieceSelected.moved = true
-            clickedTile.piece = pieceSelected
-            pieceSelected = null
-            if(whiteTurn == true){
-                whiteTurn = false
-            }
-            else{
-                whiteTurn = true
-            }
-            
-
+function MovePiece(piece, tile){
+    tile.element.appendChild(pieceSelected.element)
+    DeletePossibleMoves()
+    //pawn promotion
+    if (piece.info == pawn){
+        if(whiteTurn == true && tile.pos.y == 0){
+            piece.info = queen
+            piece.element.src = piece.info.image
         }
+        else if(tile.pos.y == 7){
+            piece.info = queen
+            piece.element.src = piece.info.image
+        }
+    }
+    piece.tile.piece = null
+    piece.tile = tile
+    piece.moved = true
+    tile.piece = piece
+    pieceSelected = null
+    piece.element.style.zIndex = 10+tile.pos.y
+    ChangeTurn()
+}
+
+function ChangeTurn(){
+    console.log('changing')
+    if(whiteTurn == false){
+        whiteTurn = true
+        playerOneText.style.borderColor = 'black'
+        playerTwoText.style.borderColor = 'white'
+
+        console.log(playerOneText.style.borderColor+' '+playerTwoText.style.borderColor)
+    }
+    else{
+        whiteTurn = false
+        playerOneText.style.borderColor = 'white'
+        playerTwoText.style.borderColor = 'black'
     }
 }
 
@@ -179,7 +187,9 @@ function DeletePossibleMoves(){
     possibleMoves.length = 0
 }
 
-
+function DeletePiece(piece){
+    piece.tile.element.removeChild(piece.element)
+}
 
 function CalculatePossibleMoves(piece, enemyPieces){
     let teamModifier = 1
@@ -189,34 +199,38 @@ function CalculatePossibleMoves(piece, enemyPieces){
     for(let i = 0; i < piece.info.moves.length; i++){
         let newPos = piece.tile.pos
         if(piece.info.moves[i].firstMove == false || piece.moved == false){
-
             if(piece.info.moves[i].isRepeating == true){
-
                 console.log("move repeating")
                 let invalidMove = false
-
                 while(invalidMove == false){
-
                     for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                         newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*teamModifier,newPos.y+piece.info.moves[i].iterators[j].y*teamModifier)
                         
-                        if(newPos.x <= 7 && newPos.y <= 7 && newPos.x >= 0 && newPos.y >= 0){
-                            if(board[newPos.x][newPos.y].piece != null && (piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly')){
-                                board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
-                                possibleMoves.push(board[newPos.x][newPos.y])
-                                if(piece.canMoveOver != true){
+                        if(newPos.x <= 7 && newPos.y <= 7 && newPos.x >= 0 && newPos.y >= 0 && invalidMove == false){
+                            if(board[newPos.x][newPos.y].piece != null){
+
+                                if((whiteTurn == true && whitePieces.includes(board[newPos.x][newPos.y].piece) == true)||(whiteTurn == false && blackPieces.includes(board[newPos.x][newPos.y].piece) == true)){
                                     invalidMove = true
                                 }
+                                else if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
+                                    board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
+                                    possibleMoves.push(board[newPos.x][newPos.y])
+                                }
+                                if(piece.info.moves[i].canMoveOver == false){
+                                    invalidMove = true
+                                }
+                                
                             }
-                            else if (piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'MoveOnly'){
-                                board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
-                                possibleMoves.push(board[newPos.x][newPos.y])
+                            else if (board[newPos.x][newPos.y].piece == null){
+                                if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
+                                    board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
+                                    possibleMoves.push(board[newPos.x][newPos.y])
+                                }  
                             }
                         }
                         else{
                             invalidMove = true
                         }
-
                     }
                 }
             }
@@ -226,16 +240,14 @@ function CalculatePossibleMoves(piece, enemyPieces){
                 for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                     newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*teamModifier,newPos.y+piece.info.moves[i].iterators[j].y*teamModifier)
                     if(newPos.x <= 7 && newPos.y <= 7 && newPos.x >= 0 && newPos.y >= 0 && invalidMove == false){
-                        if(board[newPos.x][newPos.y].piece != null){
+                        if(board[newPos.x][newPos.y].piece != null && ((whiteTurn == true && whitePieces.includes(board[newPos.x][newPos.y].piece) == false)||(whiteTurn == false && blackPieces.includes(board[newPos.x][newPos.y].piece) == false))){
                             if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
                                 board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
                                 possibleMoves.push(board[newPos.x][newPos.y])
                             }
-                            
                             if(piece.info.moves[i].canMoveOver == false){
                                 invalidMove = true
                             }
-                            
                         }
                         else if (board[newPos.x][newPos.y].piece == null){
                             if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
@@ -250,8 +262,6 @@ function CalculatePossibleMoves(piece, enemyPieces){
         }
     }
 }
-
-
 
 function DestoryPiece(){
 
@@ -278,6 +288,4 @@ function FindElement(element){
     
 }
 
-
 Main()
-
