@@ -16,9 +16,8 @@ let blackPieces = Array()
 let possibleMoves = Array()
 let pieceSelected
 let whiteTurn = true
-let pawnPromoting = false
-let whitePossibleChecks = Array(Array())
-let blackPossibleChecks = Array(Array())
+// let whitePossibleChecks = Array(Array())
+// let blackPossibleChecks = Array(Array())
 let playerOneText = document.getElementById('PlayerOneText')
 let playerTwoText = document.getElementById('PlayerTwoText')
 function Main(){
