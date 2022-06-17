@@ -10,8 +10,64 @@
 
     <body>
         <h1 id="PlayerTwoText">Player Two</h1>
-        <div id="Board"></div>
+        <div id="Board">
+            <div id="WinPopup">
+                <h1 id="WinText">Player One Won</h1>
+                <button onclick='NewGame()'>New Game</button>
+            </div>
+            
+        </div>
         <h1 id="PlayerOneText">Player One</h1>
+
+        <div id="Tutorial">
+            <div id="Pieces">
+                <h1>Pieces</h1>
+                <div>
+                    <img src="./images/Pawn.png" alt="">
+                </div>
+                
+                <div>
+                    <h2>Rook</h2>
+                    <img src="./images/Rook.png" alt="">
+                </div>
+
+                <div>
+                    <h2>Knight</h2>
+                    <img src="./images/Knight.png" alt="">
+                </div>
+
+                <div>
+                    <h2>Bishop</h2>
+                    <img src="./images/Bishop.png" alt="">
+                </div>
+
+                <div>
+                    <h2>Queen</h2>
+                    <img src="./images/Queen.png" alt="">
+                </div>
+
+                <div>
+                    <h2>King</h2>
+                    <img src="./images/King.png" alt="">
+                </div>
+            </div>
+        <div id="Tiles">
+            <h1>Tile Colors</h1>
+            <div>
+                <h2>Possible Move</h2>
+                <div id="Yellow"></div>
+            </div>   
+
+            <div>
+                <h2>Possible Attack</h2>
+                <div id="Red"></div>
+            </div>
+
+            <div>
+                <h2>Part Of The Check Path</h2>
+                <div id="Blue"></div>
+            </div>
+        </div>
     </body>
     
     <script src="PieceInfo.js"></script>
