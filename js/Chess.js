@@ -25,7 +25,7 @@ function Main(){
 
 function CreateBoard(){
     tempBoard = Array(8).fill().map(()=>Array(8))
-    let isWhite = false;
+    let isWhite = true;
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
             let newTile
