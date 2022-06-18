@@ -58,46 +58,56 @@ function CreateBoard(){
     return tempBoard
 }
 
+function DeleteBoard(){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
+            board[i][j].element.parentNode.removeChild(board[i][j].element)
+        }
+    }
+    board = null
+}
+
 function SetupPieces(){
     //White Pieces
     for(let i = 0; i < 8; i++){
-        whitePieces.push(CreatePiece(pawn, 0, board[i][6], document.createElement('img')))
+        whitePieces.push(CreatePiece(pawn, 0, board[i][6], document.createElement('img'),'white'))
+        
     }
-    whitePieces.push(CreatePiece(rook, 0, board[0][7], document.createElement('img')))
-    whitePieces.push(CreatePiece(rook, 0, board[7][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(rook, 0, board[0][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(rook, 0, board[7][7], document.createElement('img'),'white'))
 
-    whitePieces.push(CreatePiece(knight, 0, board[1][7], document.createElement('img')))
-    whitePieces.push(CreatePiece(knight, 0, board[6][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(knight, 0, board[1][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(knight, 0, board[6][7], document.createElement('img'),'white'))
 
-    whitePieces.push(CreatePiece(bishop, 0, board[2][7], document.createElement('img')))
-    whitePieces.push(CreatePiece(bishop, 0, board[5][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(bishop, 0, board[2][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(bishop, 0, board[5][7], document.createElement('img'),'white'))
 
-    whitePieces.push(CreatePiece(queen, 0, board[3][7], document.createElement('img')))
-    whitePieces.push(CreatePiece(king, 0, board[4][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(queen, 0, board[3][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(king, 0, board[4][7], document.createElement('img'),'white'))
     
     //Black Pieces
     for(let i = 0; i < 8; i++){
-        blackPieces.push(CreatePiece(pawn, 0, board[i][1], document.createElement('img')))
+        blackPieces.push(CreatePiece(pawn, 0, board[i][1], document.createElement('img'),'black'))
     }
-    blackPieces.push(CreatePiece(rook, 0, board[0][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(rook, 0, board[0][0], document.createElement('img'),'black'))
     blackPieces.push(CreatePiece(rook, 0, board[7][0], document.createElement('img')))
 
-    blackPieces.push(CreatePiece(knight, 1, board[1][0], document.createElement('img')))
-    blackPieces.push(CreatePiece(knight, 1, board[6][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(knight, 1, board[1][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(knight, 1, board[6][0], document.createElement('img'),'black'))
 
-    blackPieces.push(CreatePiece(bishop, 0, board[2][0], document.createElement('img')))
-    blackPieces.push(CreatePiece(bishop, 0, board[5][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(bishop, 0, board[2][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(bishop, 0, board[5][0], document.createElement('img'),'black'))
 
-    blackPieces.push(CreatePiece(queen, 0, board[3][0], document.createElement('img')))
-    blackPieces.push(CreatePiece(king, 0, board[4][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(queen, 0, board[3][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(king, 0, board[4][0], document.createElement('img'),'black'))
 
     blackPieces.forEach(piece => {
         piece.element.style.filter = "brightness(60%)"
     })
 }
 
-function CreatePiece(type, imageIndex, boardPos, element){
-    let newPiece = new Piece(type, boardPos, element)
+function CreatePiece(type, imageIndex, boardPos, element, color){
+    let newPiece = new Piece(type, boardPos, element,color)
     newPiece.element.src = newPiece.info.image[imageIndex]
     newPiece.element.style.position = 'absolute'
     newPiece.element.style.bottom = type.yOffset +'px'
@@ -190,19 +200,28 @@ function Win(){
 }
 
 function NewGame(){
-    whitePieces.forEach(p => DeletePiece(p))
-    blackPieces.forEach(p => DeletePiece(p))
+    for(let i = 0; i < whitePieces.length; i++){
+        if(blackPieces[i].element != null){
+            DeletePiece(whitePieces[i])
+        }
+    }
+    for(let i = 0; i < blackPieces.length; i++){
+        if(blackPieces[i].element != null){
+            DeletePiece(blackPieces[i])
+        }
+    }
+    whitePieces = Array()
+    blackPieces = Array()
     if(whiteTurn == false){
         ChangeTurn()
     }
     ResetBoardColor()
     SetupPieces()
+    DeletePossibleMoves()
+    currentEnemyPieces = blackPieces
+    currentTeamPieces = whitePieces
     let popup = document.getElementById('WinPopup')
     popup.style.visibility = 'hidden'
-
-
-    
-
 }
 
 function ResetBoardColor(){
@@ -218,7 +237,6 @@ function DrawCheck(piece, checkInfo){
     board[newPos.x][newPos.y].element.style.backgroundColor = 'blue'
     if(piece.info.moves[checkInfo[1]].isRepeating == true){
         let invalidMove = false
-        let incrementer = 0
         while(invalidMove == false){
             for(let i = 0; i < piece.info.moves[checkInfo[1]].iterators.length; i++){
                 newPos = new Vector2(newPos.x+piece.info.moves[checkInfo[1]].iterators[i].x*GetTeamModifier(piece),newPos.y+piece.info.moves[checkInfo[1]].iterators[i].y*GetTeamModifier(piece))
@@ -237,11 +255,19 @@ function DrawCheck(piece, checkInfo){
         }
     }
     else{
+        let invalidMove = false
         for(let i = 0; i < piece.info.moves[checkInfo[1]].iterators.length; i++){
-            newPos = new Vector2(newPos.x+piece.info.moves[checkInfo[1]].iterators[i].x*GetTeamModifier(),newPos.y+piece.info.moves[checkInfo[1]].iterators[i].y*GetTeamModifier())
-            if(IsInsideBoard(newPos) == true){
+            newPos = new Vector2(newPos.x+piece.info.moves[checkInfo[1]].iterators[i].x*GetTeamModifier(piece),newPos.y+piece.info.moves[checkInfo[1]].iterators[i].y*GetTeamModifier(piece))
+            
+            if(IsInsideBoard(newPos) == true && invalidMove == false){
                 board[newPos.x][newPos.y].element.style.backgroundColor = 'blue'
+                if(board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y].piece.info == king){
+                    invalidMove = true
+                }
                 
+            }
+            else{
+                invalidMove = true
             }
         }
     }
@@ -271,7 +297,9 @@ function DeletePossibleMoves(){
 }
 
 function DeletePiece(piece){
+    piece.tile.piece = null
     piece.tile.element.removeChild(piece.element)
+    piece.element = null
 }
 
 function CheckForPossibleCheck(enemyPieces, currentTile, futureTile){
@@ -286,68 +314,72 @@ function CheckForPossibleCheck(enemyPieces, currentTile, futureTile){
 function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
     for(let j = 0; j < piece.info.moves.length; j++){
         let newPos = piece.tile.pos
-        if(piece.info.moves[j].isRepeating == true){
-            let invalidMove = false
-            while (invalidMove == false){
-                for(let k = 0; k < piece.info.moves[j].iterators.length; k++){
-                    newPos = new Vector2(newPos.x+piece.info.moves[j].iterators[k].x*GetTeamModifier(piece),newPos.y+piece.info.moves[j].iterators[k].y*GetTeamModifier(piece))
-                    if(IsInsideBoard(newPos) == true && invalidMove == false){
-                        if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
-                            if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
-                                if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                    return [true, j]
-                                }
-                            }
-                            else{
-                                invalidMove = true
-                            }
-                        }
-                        else if(board[newPos.x][newPos.y] == futureTile){
-                            if(currentTile.piece != null && currentTile.piece.info == king){
-                                if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                    return [true, j]
-                                }
-                            }
-                            else {
-                                invalidMove = true
-                            }
-                        }
-                    }
-                    else{
-                        invalidMove = true
-                    }
-                }
-            }
+        if(futureTile != null && futureTile.pos == newPos){
+            return [false, 0]
         }
-        else{
-            let invalidMove = false
-            for(let k = 0; k < piece.info.moves[j].iterators.length; k++){
-                newPos = new Vector2(newPos.x+piece.info.moves[j].iterators[k].x*GetTeamModifier(piece),newPos.y+piece.info.moves[j].iterators[k].y*GetTeamModifier(piece))
-                if(IsInsideBoard(newPos) == true && invalidMove == false){
-                    if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
-                        if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king  ){
-                            if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                return [true, j]
-                                
+        if(piece.info.moves[j].firstMove == false || piece.moved == false){
+            if(piece.info.moves[j].isRepeating == true){
+                let invalidMove = false
+                while (invalidMove == false){
+                    for(let k = 0; k < piece.info.moves[j].iterators.length; k++){
+                        newPos = new Vector2(newPos.x+piece.info.moves[j].iterators[k].x*GetTeamModifier(piece),newPos.y+piece.info.moves[j].iterators[k].y*GetTeamModifier(piece))
+                        if(IsInsideBoard(newPos) == true && invalidMove == false){
+                            if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
+                                if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
+                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                        return [true, j]
+                                    }
+                                }
+                                else{
+                                    invalidMove = true
+                                }
+                            }
+                            else if(board[newPos.x][newPos.y] == futureTile){
+                                if(currentTile.piece != null && currentTile.piece.info == king){
+                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                        return [true, j]
+                                    }
+                                }
+                                else {
+                                    invalidMove = true
+                                }
                             }
                         }
                         else{
                             invalidMove = true
                         }
                     }
-                    else if(board[newPos.x][newPos.y] == futureTile){
-                        if(currentTile.piece.info == king){
-                            if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                return [true, j]
+                }
+            }
+            else{
+                let invalidMove = false
+                for(let k = 0; k < piece.info.moves[j].iterators.length; k++){
+                    newPos = new Vector2(newPos.x+piece.info.moves[j].iterators[k].x*GetTeamModifier(piece),newPos.y+piece.info.moves[j].iterators[k].y*GetTeamModifier(piece))
+                        if(IsInsideBoard(newPos) == true && invalidMove == false){
+                            if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
+                                if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
+                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                        return [true, j]
+                                    }
+                                }
+                                else{
+                                    invalidMove = true
+                                }
+                            }
+                            else if(board[newPos.x][newPos.y] == futureTile){
+                                if(currentTile.piece != null && currentTile.piece.info == king){
+                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                        return [true, j]
+                                    }
+                                }
+                                else {
+                                    invalidMove = true
+                                }
                             }
                         }
-                        else {
+                        else{
                             invalidMove = true
                         }
-                    }
-                }
-                else{
-                    invalidMove = true
                 }
             }
         }
@@ -367,9 +399,7 @@ function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
                     for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                         newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
-                            console.log(board[newPos.x][newPos.y])
                             if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y]) == false){
-                                console.log('correct')
                                 if(board[newPos.x][newPos.y].piece != null){
                                     if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
                                         invalidMove = true
@@ -396,7 +426,6 @@ function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
                         else{
                             invalidMove = true
                         }
-                        
                     }
                 }
             }
@@ -405,31 +434,34 @@ function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
                 //non repeating moves
                 for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                     newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
-                    if(IsInsideBoard(newPos) && invalidMove == false){
-                        if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y]) == false){
-                            if(board[newPos.x][newPos.y].piece != null){
-                                if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
-                                    invalidMove = true
-                                }
-                                else if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
-                                    if(colorTiles == true){
-                                        board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
+                        if(IsInsideBoard(newPos) && invalidMove == false){
+                            if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y]) == false){
+                                if(board[newPos.x][newPos.y].piece != null){
+                                    if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
+                                        invalidMove = true
                                     }
-                                    tempMoves.push(board[newPos.x][newPos.y])
-                                }
-                                invalidMove = true
-                                
-                            }
-                            else if (board[newPos.x][newPos.y].piece == null){
-                                if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
-                                    if(colorTiles == true){
-                                        board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
+                                    else if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
+                                        if(colorTiles == true){
+                                            board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
+                                        }
+                                        tempMoves.push(board[newPos.x][newPos.y])
+                                        invalidMove = true
                                     }
-                                    tempMoves.push(board[newPos.x][newPos.y])
-                                }  
+                                    
+                                }
+                                else if (board[newPos.x][newPos.y].piece == null){
+                                    if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
+                                        if(colorTiles == true){
+                                            board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
+                                        }
+                                        tempMoves.push(board[newPos.x][newPos.y])
+                                    }  
+                                }
                             }
                         }
-                    }
+                        else{
+                            invalidMove = true
+                        }
                 }
             }
         }

@@ -1,9 +1,9 @@
 class Piece {
-    constructor(newInfo, newTile, newElement, newWhite){
+    constructor(newInfo, newTile, newElement, newColor){
         this.info = newInfo,
         this.tile = newTile,
         this.moved = false,
         this.element = newElement
-        this.white = newWhite
+        this.color = newColor
     }
 }
