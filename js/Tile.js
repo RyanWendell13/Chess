@@ -5,8 +5,4 @@ class Tile {
         this.color = newColor
         this.piece = null
     }
-
-    SetPiece(newPiece){
-        this.piece = p
-    }
 }

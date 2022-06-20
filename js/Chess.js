@@ -67,45 +67,47 @@ function DeleteBoard(){
     board = null
 }
 
+//calls CreatePiece function to create all pieces
 function SetupPieces(){
     //White Pieces
     for(let i = 0; i < 8; i++){
-        whitePieces.push(CreatePiece(pawn, 0, board[i][6], document.createElement('img'),'white'))
+        whitePieces.push(CreatePiece(pawn, 0, board[i][6], document.createElement('img')))
         
     }
-    whitePieces.push(CreatePiece(rook, 0, board[0][7], document.createElement('img'),'white'))
-    whitePieces.push(CreatePiece(rook, 0, board[7][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(rook, 0, board[0][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(rook, 0, board[7][7], document.createElement('img')))
 
-    whitePieces.push(CreatePiece(knight, 0, board[1][7], document.createElement('img'),'white'))
-    whitePieces.push(CreatePiece(knight, 0, board[6][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(knight, 0, board[1][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(knight, 0, board[6][7], document.createElement('img')))
 
-    whitePieces.push(CreatePiece(bishop, 0, board[2][7], document.createElement('img'),'white'))
-    whitePieces.push(CreatePiece(bishop, 0, board[5][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(bishop, 0, board[2][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(bishop, 0, board[5][7], document.createElement('img')))
 
-    whitePieces.push(CreatePiece(queen, 0, board[3][7], document.createElement('img'),'white'))
-    whitePieces.push(CreatePiece(king, 0, board[4][7], document.createElement('img'),'white'))
+    whitePieces.push(CreatePiece(queen, 0, board[3][7], document.createElement('img')))
+    whitePieces.push(CreatePiece(king, 0, board[4][7], document.createElement('img')))
     
     //Black Pieces
     for(let i = 0; i < 8; i++){
-        blackPieces.push(CreatePiece(pawn, 0, board[i][1], document.createElement('img'),'black'))
+        blackPieces.push(CreatePiece(pawn, 0, board[i][1], document.createElement('img')))
     }
-    blackPieces.push(CreatePiece(rook, 0, board[0][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(rook, 0, board[0][0], document.createElement('img')))
     blackPieces.push(CreatePiece(rook, 0, board[7][0], document.createElement('img')))
 
-    blackPieces.push(CreatePiece(knight, 1, board[1][0], document.createElement('img'),'black'))
-    blackPieces.push(CreatePiece(knight, 1, board[6][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(knight, 1, board[1][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(knight, 1, board[6][0], document.createElement('img')))
 
-    blackPieces.push(CreatePiece(bishop, 0, board[2][0], document.createElement('img'),'black'))
-    blackPieces.push(CreatePiece(bishop, 0, board[5][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(bishop, 0, board[2][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(bishop, 0, board[5][0], document.createElement('img')))
 
-    blackPieces.push(CreatePiece(queen, 0, board[3][0], document.createElement('img'),'black'))
-    blackPieces.push(CreatePiece(king, 0, board[4][0], document.createElement('img'),'black'))
+    blackPieces.push(CreatePiece(queen, 0, board[3][0], document.createElement('img')))
+    blackPieces.push(CreatePiece(king, 0, board[4][0], document.createElement('img')))
 
     blackPieces.forEach(piece => {
         piece.element.style.filter = "brightness(60%)"
     })
 }
 
+//creates and styles pieces
 function CreatePiece(type, imageIndex, boardPos, element, color){
     let newPiece = new Piece(type, boardPos, element,color)
     newPiece.element.src = newPiece.info.image[imageIndex]
@@ -118,9 +120,11 @@ function CreatePiece(type, imageIndex, boardPos, element, color){
     return newPiece
 }
 
+//runs whenever a board element is clicked
 function Clicked(element){
     let obj = FindElement(element)
     let clickedTile
+    //checks to see if clicked obj is a piece
     if(obj.pos == null){
         clickedTile = obj.tile
     }
@@ -168,6 +172,7 @@ function MovePiece(piece, tile){
     pieceSelected = null
     piece.element.style.zIndex = 10+tile.pos.y
     checkInfo = CheckForCheck(piece, currentTeamPieces, null, null)
+
     if(checkInfo[0] == true){
         DrawCheck(piece, checkInfo)
         CheckForCheckMate(currentEnemyPieces)
@@ -175,6 +180,7 @@ function MovePiece(piece, tile){
     ChangeTurn()
 }
 
+//when a check is called this is run to see if any move is available
 function CheckForCheckMate(enemyPieces){
     let allPossibleCheckedMoves = Array()
     for(let i = 0; i < enemyPieces.length; i++){
@@ -199,6 +205,7 @@ function Win(){
     popup.style.visibility = 'visible'
 }
 
+//run to restart the game
 function NewGame(){
     for(let i = 0; i < whitePieces.length; i++){
         if(blackPieces[i].element != null){
@@ -216,6 +223,11 @@ function NewGame(){
         ChangeTurn()
     }
     ResetBoardColor()
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board.length; j++){
+            board[i][j].piece = null
+        }
+    }
     SetupPieces()
     DeletePossibleMoves()
     currentEnemyPieces = blackPieces
@@ -232,6 +244,7 @@ function ResetBoardColor(){
     }
 }
 
+//draws the check path
 function DrawCheck(piece, checkInfo){
     let newPos = piece.tile.pos
     board[newPos.x][newPos.y].element.style.backgroundColor = 'blue'
@@ -302,6 +315,7 @@ function DeletePiece(piece){
     piece.element = null
 }
 
+//makes sure move won't check the king
 function CheckForPossibleCheck(enemyPieces, currentTile, futureTile){
     for(let i = 0; i < enemyPieces.length; i++){
         if(CheckForCheck(enemyPieces[i], enemyPieces, currentTile, futureTile)[0] == true){
@@ -311,12 +325,11 @@ function CheckForPossibleCheck(enemyPieces, currentTile, futureTile){
     return false
                                    
 }
+
+//used to check apporpriate movement with checks
 function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
     for(let j = 0; j < piece.info.moves.length; j++){
         let newPos = piece.tile.pos
-        if(futureTile != null && futureTile.pos == newPos){
-            return [false, 0]
-        }
         if(piece.info.moves[j].firstMove == false || piece.moved == false){
             if(piece.info.moves[j].isRepeating == true){
                 let invalidMove = false
@@ -387,6 +400,7 @@ function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
     return [false, 0]
 }
 
+//finds and dispalys all possible moves for a piece
 function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
     let tempMoves = Array()
     for(let i = 0; i < piece.info.moves.length; i++){
@@ -477,6 +491,7 @@ function IsInsideBoard(pos){
     }
 }
 
+//team modifier is needed to flip the movement of opposing pieces
 function GetTeamModifier(piece){
     let teamModifier = 1
     if(whitePieces.includes(piece) == true){
