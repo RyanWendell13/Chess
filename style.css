@@ -79,18 +79,23 @@
 }
 
 #Yellow{
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: yellow;
 }
 #Red{
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: red;
 }
 
 #Blue{
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: blue;
+}
+
+#Issues{
+    margin-left: 20px;
+    margin-right: 20px;
 }
