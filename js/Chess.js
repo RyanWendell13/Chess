@@ -368,31 +368,31 @@ function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
                 let invalidMove = false
                 for(let k = 0; k < piece.info.moves[j].iterators.length; k++){
                     newPos = new Vector2(newPos.x+piece.info.moves[j].iterators[k].x*GetTeamModifier(piece),newPos.y+piece.info.moves[j].iterators[k].y*GetTeamModifier(piece))
-                        if(IsInsideBoard(newPos) == true && invalidMove == false){
-                            if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
-                                if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
-                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                        return [true, j]
-                                    }
-                                }
-                                else{
-                                    invalidMove = true
+                    if(IsInsideBoard(newPos) == true && invalidMove == false){
+                        if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
+                            if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
+                                if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                    return [true, j]
                                 }
                             }
-                            else if(board[newPos.x][newPos.y] == futureTile){
-                                if(currentTile.piece != null && currentTile.piece.info == king){
-                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
-                                        return [true, j]
-                                    }
-                                }
-                                else {
-                                    invalidMove = true
-                                }
+                            else{
+                                invalidMove = true
                             }
                         }
-                        else{
-                            invalidMove = true
+                        else if(board[newPos.x][newPos.y] == futureTile){
+                            if(currentTile.piece != null && currentTile.piece.info == king){
+                                if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                    return [true, j]
+                                }
+                            }
+                            else {
+                                invalidMove = true
+                            }
                         }
+                    }
+                    else{
+                        invalidMove = true
+                    }
                 }
             }
         }
