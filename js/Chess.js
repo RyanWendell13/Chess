@@ -316,14 +316,60 @@ function DeletePiece(piece){
 }
 
 //makes sure move won't check the king
-function CheckForPossibleCheck(enemyPieces, currentTile, futureTile){
+function CheckForPossibleCheck(enemyPieces, currentTile, futureTile, moveIndex){
     for(let i = 0; i < enemyPieces.length; i++){
-        if(CheckForCheck(enemyPieces[i], enemyPieces, currentTile, futureTile)[0] == true){
-            return true
+        if(futureTile != null && CanMoveTakeCheckingPiece(enemyPieces[i], currentTile.piece, futureTile, moveIndex) == false){
+            if(CheckForCheck(enemyPieces[i], enemyPieces, currentTile, futureTile)[0] == true){
+                return true
+            }
         }
     }
     return false
                                    
+}
+
+function CanMoveTakeCheckingPiece(checkingPiece, attackPiece, futureTile, moveIndex){
+    let newPos = attackPiece.tile.pos
+    if(attackPiece.info.moves[moveIndex].firstMove == false || attackPiece.moved == false){
+        if(attackPiece.info.moves[moveIndex].isRepeating == true){
+            let invalidMove = false
+            while (invalidMove == false){
+                for(let i = 0; i < attackPiece.info.moves[moveIndex].iterators.length; i++){
+                    newPos = new Vector2(newPos.x+attackPiece.info.moves[moveIndex].iterators[i].x*GetTeamModifier(attackPiece),newPos.y+attackPiece.info.moves[moveIndex].iterators[i].y*GetTeamModifier(attackPiece))
+                    if(IsInsideBoard(newPos) == true && invalidMove == false){
+                        if(board[newPos.x][newPos.y].piece != null){
+                            if(board[newPos.x][newPos.y].piece == checkingPiece && futureTile == board[newPos.x][newPos.y]){
+                                return true
+                            }
+                            else{
+                                invalidMove = true
+                            }
+                        }
+                    }
+                    else{
+                        invalidMove = true
+                    }
+                }
+            }
+        }
+        else{
+            let invalidMove = false
+            for(let i = 0; i < attackPiece.info.moves[moveIndex].iterators.length; i++){
+                newPos = new Vector2(newPos.x+attackPiece.info.moves[moveIndex].iterators[i].x*GetTeamModifier(attackPiece),newPos.y+attackPiece.info.moves[moveIndex].iterators[i].y*GetTeamModifier(attackPiece))
+                if(IsInsideBoard(newPos) == true && invalidMove == false){
+                    if(board[newPos.x][newPos.y].piece != null){
+                        if(board[newPos.x][newPos.y].piece == checkingPiece && futureTile == board[newPos.x][newPos.y]){
+                            return true
+                        }
+                        else{
+                            invalidMove = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false
 }
 
 //used to check apporpriate movement with checks
@@ -339,7 +385,7 @@ function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
                         if(IsInsideBoard(newPos) == true && invalidMove == false){
                             if((board[newPos.x][newPos.y].piece != null && board[newPos.x][newPos.y] != currentTile)){
                                 if(pieceTeam.includes(board[newPos.x][newPos.y].piece) == false && board[newPos.x][newPos.y].piece.info == king){
-                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                    if(piece.info.moves[j].type == 'Standard'|| piece.info.moves[j].type == 'AttackOnly'){
                                         return [true, j]
                                     }
                                 }
@@ -349,7 +395,7 @@ function CheckForCheck(piece, pieceTeam, currentTile, futureTile){
                             }
                             else if(board[newPos.x][newPos.y] == futureTile){
                                 if(currentTile.piece != null && currentTile.piece.info == king){
-                                    if(piece.info.moves[j].type == 'Standard'||piece.info.moves[j].type == 'AttackOnly'){
+                                    if(piece.info.moves[j].type == 'Standard'|| piece.info.moves[j].type == 'AttackOnly'){
                                         return [true, j]
                                     }
                                 }
@@ -413,7 +459,7 @@ function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
                     for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                         newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
-                            if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y]) == false){
+                            if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y],i) == false){
                                 if(board[newPos.x][newPos.y].piece != null){
                                     if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
                                         invalidMove = true
@@ -449,7 +495,7 @@ function CalculatePossibleMoves(piece, enemyPieces, colorTiles){
                 for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                     newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
-                            if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y]) == false){
+                            if(CheckForPossibleCheck(enemyPieces,piece.tile,board[newPos.x][newPos.y],i) == false){
                                 if(board[newPos.x][newPos.y].piece != null){
                                     if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
                                         invalidMove = true
