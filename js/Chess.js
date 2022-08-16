@@ -312,14 +312,24 @@ function DeletePossibleMoves(){
 }
 
 function DeletePiece(piece){
-    piece.tile.piece = null
     if (piece.element != null){
         piece.tile.element.removeChild(piece.element)
         piece.element = null
     }
+    piece.tile.piece = null
+    piece.tile = null
+    console.log(whitePieces)
+    let i = whitePieces.findIndex((p) => p === piece )
+    if (i != -1){
+        whitePieces.splice(i,1)
+    }
 
-    whitePieces.filter(p => { p == piece})
-    blackPieces.filter(p => { p == piece})
+    console.log(whitePieces)
+
+    i = blackPieces.findIndex((p) => p === piece )
+    if (i != -1){
+        blackPieces.splice(i,1)
+    }
 }
 
 //makes sure move won't check the king
