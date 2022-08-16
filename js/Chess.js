@@ -58,6 +58,40 @@ function CreateBoard(){
     return tempBoard
 }
 
+
+
+//run to restart the game
+function NewGame(){
+    for(let i = 0; i < whitePieces.length; i++){
+        if(whitePieces[i].element != null){
+            DeletePiece(whitePieces[i])
+        }
+    }
+    for(let i = 0; i < blackPieces.length; i++){
+        if(blackPieces[i].element != null){
+            DeletePiece(blackPieces[i])
+        }
+    }
+    whitePieces = Array()
+    blackPieces = Array()
+    if(whiteTurn == false){
+        ChangeTurn()
+    }
+    ResetBoardColor()
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board.length; j++){
+            board[i][j].piece = null
+        }
+    }
+    SetupPieces()
+    DeletePossibleMoves()
+    currentEnemyPieces = blackPieces
+    currentTeamPieces = whitePieces
+    let popup = document.getElementById('WinPopup')
+    popup.style.visibility = 'hidden'
+}
+
+
 function DeleteBoard(){
     for(let i = 0; i < board.length; i++){
         for(let j = 0; j < board[i].length; j++){
@@ -205,36 +239,7 @@ function Win(){
     popup.style.visibility = 'visible'
 }
 
-//run to restart the game
-function NewGame(){
-    for(let i = 0; i < whitePieces.length; i++){
-        if(blackPieces[i].element != null){
-            DeletePiece(whitePieces[i])
-        }
-    }
-    for(let i = 0; i < blackPieces.length; i++){
-        if(blackPieces[i].element != null){
-            DeletePiece(blackPieces[i])
-        }
-    }
-    whitePieces = Array()
-    blackPieces = Array()
-    if(whiteTurn == false){
-        ChangeTurn()
-    }
-    ResetBoardColor()
-    for(let i = 0; i < board.length; i++){
-        for(let j = 0; j < board.length; j++){
-            board[i][j].piece = null
-        }
-    }
-    SetupPieces()
-    DeletePossibleMoves()
-    currentEnemyPieces = blackPieces
-    currentTeamPieces = whitePieces
-    let popup = document.getElementById('WinPopup')
-    popup.style.visibility = 'hidden'
-}
+
 
 function ResetBoardColor(){
     for(let i = 0; i < board.length; i++){
@@ -313,6 +318,12 @@ function DeletePiece(piece){
     piece.tile.piece = null
     piece.tile.element.removeChild(piece.element)
     piece.element = null
+    if(whitePieces.find((p) => piece == p)){
+        whitePieces.splice(0, 1);
+    }
+    else if(blackPieces.find((p) => piece == p)){
+
+    }
 }
 
 //makes sure move won't check the king
