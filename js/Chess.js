@@ -63,14 +63,11 @@ function CreateBoard(){
 //run to restart the game
 function NewGame(){
     for(let i = 0; i < whitePieces.length; i++){
-        if(whitePieces[i].element != null){
             DeletePiece(whitePieces[i])
-        }
+        
     }
     for(let i = 0; i < blackPieces.length; i++){
-        if(blackPieces[i].element != null){
             DeletePiece(blackPieces[i])
-        }
     }
     whitePieces = Array()
     blackPieces = Array()
@@ -316,14 +313,13 @@ function DeletePossibleMoves(){
 
 function DeletePiece(piece){
     piece.tile.piece = null
-    piece.tile.element.removeChild(piece.element)
-    piece.element = null
-    if(whitePieces.find((p) => piece == p)){
-        whitePieces.splice(0, 1);
+    if (piece.element != null){
+        piece.tile.element.removeChild(piece.element)
+        piece.element = null
     }
-    else if(blackPieces.find((p) => piece == p)){
 
-    }
+    whitePieces.filter(p => { p == piece})
+    blackPieces.filter(p => { p == piece})
 }
 
 //makes sure move won't check the king
