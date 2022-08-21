@@ -20,6 +20,7 @@ function Main(){
     board = CreateBoard()
     SetupPieces()
     playerOneText.style.borderColor = 'black'
+
     
 }
 
@@ -62,24 +63,19 @@ function CreateBoard(){
 
 //run to restart the game
 function NewGame(){
-    for(let i = 0; i < whitePieces.length; i++){
-            DeletePiece(whitePieces[i])
+    let len =  whitePieces.length
+    for(let i = 0; i < len; i++){
+        DeletePiece(whitePieces[0])
         
     }
-    for(let i = 0; i < blackPieces.length; i++){
-            DeletePiece(blackPieces[i])
+    len = blackPieces.length
+    for(let i = 0; i < len; i++){
+            DeletePiece(blackPieces[0])
     }
-    whitePieces = Array()
-    blackPieces = Array()
     if(whiteTurn == false){
         ChangeTurn()
     }
     ResetBoardColor()
-    for(let i = 0; i < board.length; i++){
-        for(let j = 0; j < board.length; j++){
-            board[i][j].piece = null
-        }
-    }
     SetupPieces()
     DeletePossibleMoves()
     currentEnemyPieces = blackPieces
@@ -139,8 +135,8 @@ function SetupPieces(){
 }
 
 //creates and styles pieces
-function CreatePiece(type, imageIndex, boardPos, element, color){
-    let newPiece = new Piece(type, boardPos, element,color)
+function CreatePiece(type, imageIndex, boardPos, element){
+    let newPiece = new Piece(type, boardPos, element)
     newPiece.element.src = newPiece.info.image[imageIndex]
     newPiece.element.style.position = 'absolute'
     newPiece.element.style.bottom = type.yOffset +'px'
@@ -162,7 +158,6 @@ function Clicked(element){
     else{
         clickedTile = obj
     }
-    console.log(clickedTile)
     if(clickedTile.piece != null){
         if(clickedTile.piece != pieceSelected ){
             if((whiteTurn == true && blackPieces.includes(clickedTile.piece) == false) || (whiteTurn == false && whitePieces.includes(clickedTile.piece) == false)){
@@ -173,6 +168,7 @@ function Clicked(element){
             else if (pieceSelected != null && possibleMoves.includes(clickedTile)){
                 DeletePiece(clickedTile.piece)
                 MovePiece(pieceSelected, clickedTile)
+                pieceSelected = null
             }
         }
     }
@@ -312,24 +308,11 @@ function DeletePossibleMoves(){
 }
 
 function DeletePiece(piece){
-    if (piece.element != null){
-        piece.tile.element.removeChild(piece.element)
-        piece.element = null
-    }
+    piece.element.parentNode.removeChild(piece.element)
     piece.tile.piece = null
-    piece.tile = null
-    console.log(whitePieces)
-    let i = whitePieces.findIndex((p) => p === piece )
-    if (i != -1){
-        whitePieces.splice(i,1)
-    }
-
-    console.log(whitePieces)
-
-    i = blackPieces.findIndex((p) => p === piece )
-    if (i != -1){
-        blackPieces.splice(i,1)
-    }
+    whitePieces = whitePieces.filter(p => p !== piece )
+    blackPieces = blackPieces.filter(p => p !== piece )
+    
 }
 
 //makes sure move won't check the king
