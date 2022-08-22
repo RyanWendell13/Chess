@@ -79,6 +79,7 @@
 }
 
 #Yellow{
+    text-align: center;
     width: 30px;
     height: 30px;
     background-color: yellow;
@@ -98,4 +99,10 @@
 #Issues{
     margin-left: 20px;
     margin-right: 20px;
+}
+#Images{
+    text-align: center;
+}
+#TileImages{
+    margin-left: 10px;
 }
