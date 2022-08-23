@@ -5,4 +5,3 @@ class PieceInfo{
         this.moves = newMoves
     }
 }
-// export {PieceInfo}

@@ -9,6 +9,9 @@
     </head>
 
     <body>
+        <h1>
+            IN PROGRESS THIS PAGE DOES NOT WORK
+        </h1>
         <button id="Restart" onclick="NewGame()">
             <img src="./images/ReloadIcon.png" alt="Restart Button">
         </button>
@@ -28,6 +31,9 @@
             <div id="Gameplay">
                 <p>Above and below the board are two boxes saying "Player One" and "Player Two". These show whose turn it is. When a box has a black border around it that means it's that players turn </p>
                 <p>Simply click on a piece to move. It will highlight all possible moves the piece can make. Click on one of the highlighted tiles to move to it</p>
+                <p>Corners do not count as adjecent tiles</p>
+                <p>To take a Pawn you must surround it with to other pawns, in a line. If a pawn is in the corner it can be taken by putting two pawns in the adjacent tiles. Outside of this the walls cannot be used to capture pawns. The Dux can be used to capture Pieces </p>
+                <p>Capturing the Dux is one way to win the game. To capture the Dux it  must be surronded on all four adjacent tiles.</p>
 
             </div>
 
@@ -54,6 +60,8 @@
                 <div>
                     <h4>Possible Move</h4>
                     <div id="Yellow"></div>
+                    <h4>Cannot Be Used</h4>
+                    <div id="Blue"></div>
                 </div>
             </div>
         </div>

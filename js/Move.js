@@ -7,4 +7,3 @@ class Move {
         this.firstMove = newFirstMove
     }
 }
-// export default {Move}

@@ -7,9 +7,8 @@ class Piece {
     }
 }
 
-
 //creates and styles pieces
-function CreatePiece(type, imageIndex, boardPos, element){
+let CreatePiece = (type, imageIndex, boardPos, element) => {
     let newPiece = new Piece(type, boardPos, element)
     newPiece.element.src = newPiece.info.image[imageIndex]
     newPiece.element.style.position = 'absolute'
@@ -22,10 +21,32 @@ function CreatePiece(type, imageIndex, boardPos, element){
 }
 
 
-function DeletePiece(piece){
+let DeletePiece = (piece) => {
     piece.element.parentNode.removeChild(piece.element)
     piece.tile.piece = null
     whitePieces = whitePieces.filter(p => p !== piece )
     blackPieces = blackPieces.filter(p => p !== piece )
     
+}
+
+let MovePiece = (piece, tile, ExclusiveMoveChecks) => {
+    tile.element.appendChild(pieceSelected.element)
+    DeletePossibleMoves()
+
+    //run exclusive functions
+    ExclusiveMoveChecks(piece, tile)
+
+    piece.tile.piece = null
+    piece.tile = tile
+    piece.moved = true
+    tile.piece = piece
+    pieceSelected = null
+    piece.element.style.zIndex = 10+tile.pos.y
+    checkInfo = CheckForCheck(piece, currentTeamPieces, null, null)
+
+    if(checkInfo[0] == true){
+        DrawCheck(piece, checkInfo)
+        CheckForCheckMate(currentEnemyPieces)
+    }
+    ChangeTurn()
 }

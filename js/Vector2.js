@@ -4,5 +4,3 @@ class Vector2 {
         this.y = newY
     }
 }
-
-// export {Vector2}
