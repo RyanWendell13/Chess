@@ -6,3 +6,6 @@ class Tile {
         this.piece = null
     }
 }
+
+
+// export default {Tile}
