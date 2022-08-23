@@ -29,12 +29,12 @@ let DeletePiece = (piece) => {
     
 }
 
-let MovePiece = (piece, tile, ExclusiveMoveChecks) => {
+let MovePiece = (piece, tile) => {
     tile.element.appendChild(pieceSelected.element)
     DeletePossibleMoves()
 
     //run exclusive functions
-    ExclusiveMoveChecks(piece, tile)
+    PawnCheck(piece, tile)
 
     piece.tile.piece = null
     piece.tile = tile

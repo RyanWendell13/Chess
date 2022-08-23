@@ -25,8 +25,19 @@ function Main(){
     board = CreateBoard()
     SetupPieces()
     playerOneText.style.borderColor = 'black'
-    SetExclusive(MoveChecks)
     
+}
+let PawnCheck = (piece, tile) => {
+    if (piece.info == pawn){
+        if(whiteTurn == true && tile.pos.y == 0){
+            piece.info = queen
+            piece.element.src = piece.info.image
+        }
+        else if(tile.pos.y == 7){
+            piece.info = queen
+            piece.element.src = piece.info.image
+        }
+    }
 }
 
 //calls CreatePiece function to create all pieces
@@ -69,18 +80,7 @@ function SetupPieces(){
     })
 }
 
-let MoveChecks = (piece, tile) => {
-    if (piece.info == pawn){
-        if(whiteTurn == true && tile.pos.y == 0){
-            piece.info = queen
-            piece.element.src = piece.info.image
-        }
-        else if(tile.pos.y == 7){
-            piece.info = queen
-            piece.element.src = piece.info.image
-        }
-    }
-}
+
 
 //when a check is called this is run to see if any move is available
 function CheckForCheckMate(enemyPieces){
