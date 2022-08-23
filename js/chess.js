@@ -9,7 +9,7 @@ let board
 let whitePieces =Array()
 let blackPieces = Array()
 let possibleMoves = Array()
-let pieceSelected
+let pieceSelected = null
 let whiteTurn = true
 let currentEnemyPieces = blackPieces
 let currentTeamPieces = whitePieces
