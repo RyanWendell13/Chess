@@ -1,5 +1,3 @@
-
-
 let pawn = new PieceInfo(['./images/Pawn.png'], 0, [new Move([new Vector2(0,1), new Vector2(0,1)], 'MoveOnly', false, false, true), new Move([new Vector2(0,1)], 'MoveOnly', false, false, false), new Move([new Vector2(1,1)], 'AttackOnly', false, false, false), new Move([new Vector2(-1,1)], 'AttackOnly', false, false, false)])
 let rook = new PieceInfo(['./images/Rook.png'], 0, [new Move([new Vector2(0,1)], 'Standard', false, true, false),new Move([new Vector2(1,0)], 'Standard', false, true, false), new Move([new Vector2(0,-1)], 'Standard', false, true, false),new Move([new Vector2(-1,0)], 'Standard', false, true, false)])
 let knight = new PieceInfo(['./images/Knight.png', './images/KnightVariation.png'], 1, [new Move([new Vector2(1,2)], 'Standard', true, false, false),new Move([new Vector2(-1,2)], 'Standard', true, false, false),new Move([new Vector2(2,1)], 'Standard', true, false, false),new Move([new Vector2(2,-1)], 'Standard', true, false, false),new Move([new Vector2(1,-2)], 'Standard', true, false, false),new Move([new Vector2(-1,-2)], 'Standard', true, false, false),new Move([new Vector2(-2,1)], 'Standard', true, false, false),new Move([new Vector2(-2,-1)], 'Standard', true, false, false)])
@@ -59,6 +57,19 @@ function CreateBoard(){
         }
     }
     return tempBoard
+}
+
+//creates and styles pieces
+function CreatePiece(type, imageIndex, boardPos, element){
+    let newPiece = new Piece(type, boardPos, element)
+    newPiece.element.src = newPiece.info.image[imageIndex]
+    newPiece.element.style.position = 'absolute'
+    newPiece.element.style.bottom = type.yOffset +'px'
+    newPiece.element.style.zIndex = 10+boardPos.pos.y
+    newPiece.element.addEventListener('onClick',event => Clicked(event.target))
+    boardPos.element.appendChild(newPiece.element)
+    boardPos.piece = newPiece
+    return newPiece
 }
 
 
