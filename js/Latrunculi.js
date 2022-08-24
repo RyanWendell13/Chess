@@ -13,7 +13,7 @@ let playerOneText = document.getElementById('PlayerOneText')
 let playerTwoText = document.getElementById('PlayerTwoText')
 
 function Main(){
-    board = CreateBoard()
+    board = CreateBoard(12,8)
     SetupPieces()
     playerOneText.style.borderColor = 'black'
 }

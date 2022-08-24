@@ -22,7 +22,7 @@ let playerTwoText = document.getElementById('PlayerTwoText')
 
 
 function Main(){
-    board = CreateBoard()
+    board = CreateBoard(8,8)
     SetupPieces()
     playerOneText.style.borderColor = 'black'
     

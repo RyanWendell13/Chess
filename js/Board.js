@@ -1,9 +1,13 @@
 
-let CreateBoard = () => {
-    tempBoard = Array(8).fill().map(()=>Array(8))
+let CreateBoard = (x,y) => {
+    //160
+    background = document.getElementById('Board')
+    background.style.width = (160+x*42.5)+'px'
+    background.style.height = (160+y*42.5)+'px'
+    tempBoard = Array(x).fill().map(()=>Array(y))
     let isWhite = true;
-    for(let i = 0; i < 8; i++){
-        for(let j = 0; j < 8; j++){
+    for(let i = 0; i < x; i++){
+        for(let j = 0; j < y; j++){
             let newTile
             if(isWhite == true){
                 newTile = new Tile(new Vector2(i,j),document.createElement('div'), 'white')
@@ -20,8 +24,8 @@ let CreateBoard = () => {
             document.getElementById('Board').appendChild(newTile.element)
             //(i*42.5)+500+'px'
             newTile.element.style.position = 'absolute'
-            newTile.element.style.marginLeft = (i*42.5)+((8*42.5)/4)+'px'
-            newTile.element.style.marginTop = (j*42.5)+80+'px'
+            newTile.element.style.marginLeft = 160/2+(i*42.5)+'px'
+            newTile.element.style.marginTop = 160/2+(j*42.5)+'px'
             tempBoard[i][j] = newTile
         }
         if(isWhite == true){
