@@ -11,6 +11,7 @@ class Piece {
 let CreatePiece = (type, imageIndex, boardPos, element) => {
     let newPiece = new Piece(type, boardPos, element)
     newPiece.element.src = newPiece.info.image[imageIndex]
+    newPiece.element.alt= newPiece.info.name
     newPiece.element.style.position = 'absolute'
     newPiece.element.style.bottom = type.yOffset +'px'
     newPiece.element.style.zIndex = 10+boardPos.pos.y
