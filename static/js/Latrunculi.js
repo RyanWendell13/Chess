@@ -16,8 +16,8 @@ function Main(){
     board = CreateBoard(12,8)
     Setup()
 }
-let ExclusiveMoveChecks = () => {
-
+let ExclusiveMoveChecks = (piece,tile) => {
+    CheckForCapture(piece,tile)
 }
 
 function SetupPieces(){
@@ -40,8 +40,36 @@ function SetupPieces(){
 }
 
 
-function CheckForCapture(){
-    
+function CheckForCapture(piece, tile){
+    console.log('running')
+    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y+1].piece) == true){
+        console.log('first layer')
+        if(board[tile.pos.x][tile.pos.y+1].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
+            console.log('second layer')
+            DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
+        }
+    }
+    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x+1][tile.pos.y].piece) == true && board[tile.pos.x+1][tile.pos.y].piece.info == pawn){
+        console.log('first layer')
+        if(board[tile.pos.x+1][tile.pos.y].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
+            console.log('second layer')
+            DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
+        }
+    }
+    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y-1].piece) == true && board[tile.pos.x][tile.pos.y-1].piece.info == pawn){
+        console.log('first layer')
+        if(board[tile.pos.x][tile.pos.y-1].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
+            console.log('second layer')
+            DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
+        }
+    }
+    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x-1][tile.pos.y].piece) == true && board[tile.pos.x-1][tile.pos.y].piece.info == pawn){
+        console.log('first layer')
+        if(board[tile.pos.x-1][tile.pos.y].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
+            console.log('second layer')
+            DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
+        }
+    }
 }
 
 //finds and dispalys all possible moves for a piece

@@ -23,7 +23,7 @@ function Main(){
     Setup()
     
 }
-ExclusiveMoveChecks = (piece,tile) => {
+let ExclusiveMoveChecks = (piece,tile) => {
     PawnCheck(piece, tile)
 
 
