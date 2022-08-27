@@ -58,17 +58,7 @@ let CalculatePossibleMoves = (piece, enemyPieces, colorTiles) => {
                         newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
                                 if(board[newPos.x][newPos.y].piece != null){
-                                    if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
-                                        invalidMove = true
-                                    }
-                                    else if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
-                                        if(colorTiles == true){
-                                            board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
-                                        }
-                                        tempMoves.push(board[newPos.x][newPos.y])
-                                        invalidMove = true
-                                    }
-                                    
+                                    invalidMove = true
                                 }
                                 else if (board[newPos.x][newPos.y].piece == null){
                                     if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
@@ -93,16 +83,7 @@ let CalculatePossibleMoves = (piece, enemyPieces, colorTiles) => {
                     newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
                                 if(board[newPos.x][newPos.y].piece != null){
-                                    if((enemyPieces.includes(board[newPos.x][newPos.y].piece) == false)){
-                                        invalidMove = true
-                                    }
-                                    else if(piece.info.moves[i].type == 'Standard'||piece.info.moves[i].type == 'AttackOnly'){
-                                        if(colorTiles == true){
-                                            board[newPos.x][newPos.y].element.style.backgroundColor = 'red'
-                                        }
-                                        tempMoves.push(board[newPos.x][newPos.y])
-                                        invalidMove = true
-                                    }
+                                    invalidMove = true
                                 }
                                     
                                 else if (board[newPos.x][newPos.y].piece == null){

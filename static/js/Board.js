@@ -1,6 +1,5 @@
 
 let CreateBoard = (x,y) => {
-    //160
     background = document.getElementById('Board')
     background.style.width = (160+x*42.5)+'px'
     background.style.height = (160+y*42.5)+'px'
@@ -22,7 +21,6 @@ let CreateBoard = (x,y) => {
             newTile.element.style.width = '42.5px'
             newTile.element.style.height = '42.5px'
             document.getElementById('Board').appendChild(newTile.element)
-            //(i*42.5)+500+'px'
             newTile.element.style.position = 'absolute'
             newTile.element.style.marginLeft = 160/2+(i*42.5)+'px'
             newTile.element.style.marginTop = 160/2+(j*42.5)+'px'
@@ -57,4 +55,12 @@ let ResetBoardColor = () => {
     }
 }
 
-// export {CreateBoard, DeleteBoard, ResetBoardColor}
+
+let IsInsideBoard = (pos) => {
+    if(pos.x < board.length && pos.y < board[0].length && pos.x >= 0 && pos.y >= 0){
+        return true
+    }
+    else{
+        return false
+    }
+}

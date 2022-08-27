@@ -40,8 +40,8 @@ let Clicked = (element) => {
 
 
 let FindElement = (element) => {
-    for(let i = 0; i < 8; i++){
-        for(let j = 0; j < 8; j++){
+    for(let i = 0; i < board.length; i++){
+        for(let j = 0; j < board[i].length; j++){
             if(board[i][j].element == element){
                 return board[i][j]
             }
@@ -59,17 +59,6 @@ let FindElement = (element) => {
     }
     
 }
-
-let IsInsideBoard = (pos) => {
-    if(pos.x <= 7 && pos.y <= 7 && pos.x >= 0 && pos.y >= 0){
-        return true
-    }
-    else{
-        return false
-    }
-}
-
-
 
 //team modifier is needed to flip the movement of opposing pieces
 let GetTeamModifier = (piece) => {
