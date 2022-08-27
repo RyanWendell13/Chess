@@ -1,3 +1,13 @@
+
+function Setup(){
+    SetupPieces()
+    playerOneText.style.borderColor = 'black'
+    document.getElementById('Restart').onclick = NewGame
+    document.getElementById('NewGameButton').onclick = NewGame
+}
+
+
+
 //runs whenever a board element is clicked
 let Clicked = (element) => {
     let obj = FindElement(element)

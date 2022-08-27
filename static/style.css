@@ -1,11 +1,7 @@
 *{
     font-family: 'Times New Roman', Times, serif;
 }
-#Restart{
-    position: absolute;
-    margin-left: 10px;
-    margin-top: -0px;
-}
+
 #Game > p{
     margin-top: 0px;
     font-size: .90em;
@@ -23,6 +19,7 @@
     border-style: solid;
     border-width: 6px;
 }
+
 #Board{
     background-color: brown;
     height: 500px;
@@ -47,6 +44,7 @@
     margin-bottom: auto;
     background-color: brown;
 }
+
 #WinPopup h1{
     margin-bottom: 15px;
     color: white;
@@ -54,7 +52,6 @@
 
 #WinPopup button{
     margin-bottom: 15px;
-
 }
 
 #Guide{
@@ -81,31 +78,61 @@
     margin-right: 20px;
 }
 
-#Yellow{
+#TileColor{
     text-align: center;
     width: 30px;
     height: 30px;
-    background-color: yellow;
-}
-#Red{
-    width: 30px;
-    height: 30px;
-    background-color: red;
-}
-
-#Blue{
-    width: 30px;
-    height: 30px;
-    background-color: blue;
 }
 
 #Issues{
     margin-left: 20px;
     margin-right: 20px;
 }
+
 #Images{
     text-align: center;
 }
+
 #TileImages{
     margin-left: 10px;
+}
+
+#GameButtons {
+    position: absolute;
+    margin-left: 10px;
+    margin-top: -20px;
+    text-align: center;
+}
+
+#GameButtons > * {
+    display: block;
+}
+
+#GameDescription>*{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    color: white;
+}
+
+#GameDescription{
+    margin-bottom: 20px;
+    background-color: #333;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    border-color: black;
+    border-style: solid;
+    border-width: 6px;
+}
+
+#WebsiteInformation{
+    padding-top: 5px;
+    padding-bottom: 20px;
+    color: white;
+    background-color: brown;
+    margin-bottom: 20px;
+}
+
+#WebsiteInformation>*{
+    margin-left: 20px;
 }

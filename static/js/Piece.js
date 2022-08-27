@@ -34,20 +34,14 @@ let MovePiece = (piece, tile) => {
     tile.element.appendChild(pieceSelected.element)
     DeletePossibleMoves()
 
-    //run exclusive functions
-    PawnCheck(piece, tile)
-
     piece.tile.piece = null
     piece.tile = tile
     piece.moved = true
     tile.piece = piece
     pieceSelected = null
     piece.element.style.zIndex = 10+tile.pos.y
-    checkInfo = CheckForCheck(piece, currentTeamPieces, null, null)
 
-    if(checkInfo[0] == true){
-        DrawCheck(piece, checkInfo)
-        CheckForCheckMate(currentEnemyPieces)
-    }
+    //run exclusive functions
+    ExclusiveMoveChecks(piece, tile)
     ChangeTurn()
 }

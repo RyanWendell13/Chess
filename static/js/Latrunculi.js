@@ -1,5 +1,5 @@
-let pawn = new PieceInfo('pawn',['./images/Pawn.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
-let dux = new PieceInfo('dux',['./images/Dux.png', './images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, false, false),new Move([new Vector2(1,0)], 'MoveOnly', false, false, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, false, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, false, false)])
+let pawn = new PieceInfo('Pawn',['/images/Pawn.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
+let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, false, false),new Move([new Vector2(1,0)], 'MoveOnly', false, false, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, false, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, false, false)])
 
 let board
 let whitePieces =Array()
@@ -14,8 +14,7 @@ let playerTwoText = document.getElementById('PlayerTwoText')
 
 function Main(){
     board = CreateBoard(12,8)
-    SetupPieces()
-    playerOneText.style.borderColor = 'black'
+    Setup()
 }
 let ExclusiveMoveChecks = () => {
 
