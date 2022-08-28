@@ -26,11 +26,13 @@ let CreateBoard = (x,y) => {
             newTile.element.style.marginTop = 160/2+(j*42.5)+'px'
             tempBoard[i][j] = newTile
         }
-        if(isWhite == true){
-            isWhite = false
-        }
-        else{
-            isWhite = true
+        if (tempBoard.length % 2 == 0){
+            if(isWhite == true){
+                isWhite = false
+            }
+            else{
+                isWhite = true
+            }   
         }
     }
     return tempBoard

@@ -44,7 +44,7 @@ function game (data) {
                                         <h4>{p.name}</h4>
                                         {p.images.map(i => {
                                         return(
-                                            <img src={i} alt={p.name}></img>
+                                            <img src={i} alt={p.name} style={{width: '100%', height: '100%'}}></img>
                                             )
                                         })}
                                     </div>
@@ -92,13 +92,13 @@ function game (data) {
             <body>
                 {gameSetup(data)}
             </body>
-            <script src='/js/Board.js'></script>
-            <script src="/js/PieceInfo.js"></script>
-            <script src="/js/Move.js"></script>
-            <script src="/js/Vector2.js"></script>
-            <script src="/js/Tile.js"></script>
-            <script src="/js/Piece.js"></script>
-            <script src="/js/Game.js"></script>
+            <script src='/js/common/Board.js'></script>
+            <script src="/js/common/PieceInfo.js"></script>
+            <script src="/js/common/Move.js"></script>
+            <script src="/js/common/Vector2.js"></script>
+            <script src="/js/common/Tile.js"></script>
+            <script src="/js/common/Piece.js"></script>
+            <script src="/js/common/Game.js"></script>
             <script src={data.script}></script>
         </html>
     )

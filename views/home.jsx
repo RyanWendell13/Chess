@@ -30,11 +30,12 @@ let buttons = data =>{
 function home (data) {
     return (
         <Def>
-            <div id='WebsiteInformation'>
-                <h1>Chess-Like Games</h1>
-                <p>Welcome, here are a couple of games that are like Chess, including Chess.</p>
-            </div>
-            <main>
+
+                <main>
+                <div id='WebsiteInformation'>
+                    <h1>Chess-Like Games</h1>
+                    <p>Welcome, here are a couple of games that are like Chess, including Chess.</p>
+                </div>
                 {buttons(data)}
             </main>
         </Def>

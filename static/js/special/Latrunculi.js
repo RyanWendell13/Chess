@@ -1,5 +1,5 @@
 let pawn = new PieceInfo('Pawn',['/images/Pawn.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
-let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, false, false),new Move([new Vector2(1,0)], 'MoveOnly', false, false, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, false, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, false, false)])
+let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
 
 let board
 let whitePieces =Array()
@@ -31,7 +31,7 @@ function SetupPieces(){
     for(let i = 0; i < board.length; i++){
         blackPieces.push(CreatePiece(pawn, 0, board[i][0], document.createElement('img')))
     }
-    blackPieces.push(CreatePiece(dux, 1, board[board.length/2][1], document.createElement('img')))
+    blackPieces.push(CreatePiece(dux, 1, board[board.length/2-1][1], document.createElement('img')))
 
 
     blackPieces.forEach(piece => {
@@ -43,31 +43,70 @@ function SetupPieces(){
 function CheckForCapture(piece, tile){
     console.log('running')
     if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y+1].piece) == true){
-        console.log('first layer')
-        if(board[tile.pos.x][tile.pos.y+1].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
-            console.log('second layer')
-            DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
+        if(board[tile.pos.x][tile.pos.y+1].piece.info == pawn){
+
+            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
+
+                DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
+            }
+        }
+        else if(board[tile.pos.x][tile.pos.y+1].piece.info == dux){
+            if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == false || board[tile.pos.x][tile.pos.y+2].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].piece != null)){
+
+                Win()
+            }
         }
     }
-    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x+1][tile.pos.y].piece) == true && board[tile.pos.x+1][tile.pos.y].piece.info == pawn){
-        console.log('first layer')
-        if(board[tile.pos.x+1][tile.pos.y].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
-            console.log('second layer')
-            DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
+    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x+1][tile.pos.y].piece) == true){
+   
+        if(board[tile.pos.x+1][tile.pos.y].piece.info == pawn){
+       
+            if(IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
+           
+                DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
+            }
+        }
+        else if(board[tile.pos.x+1][tile.pos.y].piece.info == dux){
+            if((IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == false || board[tile.pos.x+2][tile.pos.y].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].piece != null)){
+
+                Win()
+            }
         }
     }
-    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y-1].piece) == true && board[tile.pos.x][tile.pos.y-1].piece.info == pawn){
-        console.log('first layer')
-        if(board[tile.pos.x][tile.pos.y-1].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
-            console.log('second layer')
-            DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
+    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y-1].piece) == true){
+   
+        if(board[tile.pos.x][tile.pos.y-1].piece.info == pawn){
+            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
+                DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
+            }
+        }
+        else if(board[tile.pos.x][tile.pos.y-1].piece.info == dux){
+            if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == false || board[tile.pos.x][tile.pos.y-2].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].piece != null)){
+
+                Win()
+            }
         }
     }
-    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x-1][tile.pos.y].piece) == true && board[tile.pos.x-1][tile.pos.y].piece.info == pawn){
-        console.log('first layer')
-        if(board[tile.pos.x-1][tile.pos.y].piece.info == pawn && IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
-            console.log('second layer')
-            DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
+    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x-1][tile.pos.y].piece) == true){
+   
+        if(board[tile.pos.x-1][tile.pos.y].piece.info == pawn){
+            if(IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
+           
+                DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
+            }
+        }
+        else if(board[tile.pos.x-1][tile.pos.y].piece.info == dux){
+            if((IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == false || board[tile.pos.x-2][tile.pos.y].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].piece != null)
+            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].piece != null)){
+                Win()
+            }
         }
     }
 }

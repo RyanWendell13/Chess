@@ -24,7 +24,7 @@ let games = [{
         `The ability to Castling hasn't been added.`,
         `The ability to En Passant hasn't been added.`],
 
-    script: '/js/Chess.js'
+    script: '/js/special/Chess.js'
     
 
 },{
@@ -42,11 +42,47 @@ let games = [{
     pieces: [{name:'Pawn',images:['/images/Pawn.png']},
         {name:'Dux',images:['/images/Dux.png', '/images/DuxVariation.png']}],
 
-    tiles: [{name:'Possible Move',color:'Yellow'},{name:'Cannot Use Again',color:'Blue'}],
+    tiles: [{name:'Possible Move',color:'Yellow'}],
 
     issues: [],
 
-    script: '/js/Latrunculi.js'
+    script: '/js/special/Latrunculi.js'
+},{
+    index: 2,
+    name: 'Tablut',
+    subtitle: 'Chess When Your Far From The Equator',
+    
+    instructions: [],
+
+    pieces: [{name:'Pawn',images:['/images/Pawn.png']},
+        {name:'Dux',images:['/images/Dux.png', '/images/DuxVariation.png']}],
+
+    tiles: [{name:'Possible Move',color:'Yellow'},{name:'Castle',color:'Red'}],
+
+    issues: [],
+
+    script: '/js/special/Tablut.js'
+},{
+    index: 3,
+    name: 'Brandubh',
+    subtitle: 'Chess But Irish',
+    
+    instructions: [`All pieces move like Rooks. They can move horizontally and vertically as long as they are unobstructed.`,
+        `Player one plays as the attackers, and goes first. Their goal is to capture the Branán. Who starts in the center of the board.`,
+        `Player two plays as the defenders. Their goal is to escape by reaching any tile on the edge of the board.`,
+        `All pieces can be captured by placing to opposing pieces on each side of the piece forming a line. There are a few exceptions to this rule.`,
+        `Exception one: If the Branán is in the castle he must be totally surrounded to be captured.`,
+        `Exception two: If the Branán is outside, but adjacent to the castle he must be surrounded on three sides.`,
+        `Exception three: If the king is in the castle and a defender is occupying an adjacent side, he can be captured against the castle. The castle acts like and allied piece.`],
+
+    pieces: [{name:'Pawn',images:['/images/Pawn.png']},
+        {name:'Branán',images:['/images/Branán.png']}],
+
+    tiles: [{name:'Possible Move',color:'Yellow'},{name:'Castle',color:'Red'}],
+
+    issues: [],
+
+    script: '/js/special/Brandubh.js'
 }]
 
 
