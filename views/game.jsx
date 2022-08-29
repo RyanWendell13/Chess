@@ -7,7 +7,7 @@ function game (data) {
             <div>
                 <div  id='GameButtons'>
                     <a href='/'>
-                        <button id= "Back">back</button>
+                        <button>back</button>
                     </a>
                     <button id="Restart" onclick="NewGame()">
                         <img src="/images/ReloadIcon.png" alt="Restart Button"/>
@@ -44,7 +44,7 @@ function game (data) {
                                         <h4>{p.name}</h4>
                                         {p.images.map(i => {
                                         return(
-                                            <img src={i} alt={p.name}></img>
+                                            <img src={i} alt={p.name} style={{width: '100%', height: '100%'}}></img>
                                             )
                                         })}
                                     </div>
@@ -81,16 +81,13 @@ function game (data) {
         )
     }
     return(
-        <html lang='en'>
+        <html>
             <head>
                 <meta charset="UTF-8"/>
                 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <title>{data.name}</title>
                 <link rel="stylesheet" href="/style.css"/>
-
-                <meta name="description" content="Chess-like Games"/>
-                <meta name="keywords" content="Chess, Latrunculi, Tablut, Brandubh"/>
             </head>
             <body>
                 {gameSetup(data)}
