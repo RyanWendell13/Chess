@@ -68,12 +68,13 @@ let games = [{
     subtitle: 'Chess But Irish',
     
     instructions: [`All pieces move like Rooks. They can move horizontally and vertically as long as they are unobstructed.`,
-        `Player one plays as the attackers, and goes first. Their goal is to capture the Branán. Who starts in the center of the board.`,
+        `Player one plays as the attackers, and goes first. Their goal is to capture the Branán. Who starts in the center of the board. In the castle`,
         `Player two plays as the defenders. Their goal is to escape by reaching any tile on the edge of the board.`,
         `All pieces can be captured by placing to opposing pieces on each side of the piece forming a line. There are a few exceptions to this rule.`,
         `Exception one: If the Branán is in the castle he must be totally surrounded to be captured.`,
         `Exception two: If the Branán is outside, but adjacent to the castle he must be surrounded on three sides.`,
-        `Exception three: If the king is in the castle and a defender is occupying an adjacent side, he can be captured against the castle. The castle acts like and allied piece.`],
+        `Exception three: If the king is in the castle and a defender is occupying an adjacent side, he can be captured against the castle. The castle acts like and allied piece.`,
+        `No pieces can enter the castle. If the Branán leaves the castle he cannot re-enter`],
 
     pieces: [{name:'Pawn',images:['/images/Pawn.png']},
         {name:'Branán',images:['/images/Branán.png']}],

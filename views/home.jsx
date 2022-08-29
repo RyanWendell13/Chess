@@ -1,28 +1,47 @@
 const React = require('react')
 const Def = require('./default')
 
-let buttons = data =>{
-    let d = Object.keys(data)
+let buttons = (games, categories) =>{
     return(
         <>
             {
-
-                d.map(k => {
-                    if(k.length <= 1){
+                categories.map(c => {
+                    if (c.name == 'none'){
                         return(
-                            <div id = 'GameDescription'>
-                                <h3>{data[k].name}</h3>
-                                <p>{data[k].subtitle}</p>
-                                <a href={`/game/${data[k].index}`}>
-                                    <button>Play</button>
-                                </a>
+                            c.ids.map(i => {
+                                return(
+                                    <div id = 'Chunk'>
+                                        <h3>{games[i].name}</h3>
+                                        <p>{games[i].subtitle}</p>
+                                        <a href={`/game/${games[i].index}`}>
+                                            <button>Play</button>
+                                        </a>
+                                    </div>
+                                )
+                            })
+                        )
+                    }
+                    else {
+                        return(
+                            <div id = 'Chunk'>
+                                <h2>{c.name}</h2>
+                                <p>{c.description}</p>
+                                {c.ids.map(i => {
+                                    return(
+                                        <div id='SubChunk'>
+                                            <h3>{games[i].name}</h3>
+                                            <p>{games[i].subtitle}</p>
+                                            <a href={`/game/${games[i].index}`}>
+                                                <button>Play</button>
+                                            </a>
+                                        </div>
+                                    )
+                                })}
                             </div>
                         )
-                    }   
+                    }
                 })
             }
-            
-            
         </>
     )
 }
@@ -30,13 +49,12 @@ let buttons = data =>{
 function home (data) {
     return (
         <Def>
-
-                <main>
+            <main>
                 <div id='WebsiteInformation'>
                     <h1>Chess-Like Games</h1>
                     <p>Welcome, here are a couple of games that are like Chess, including Chess.</p>
                 </div>
-                {buttons(data)}
+                {buttons(data.games,data.categories)}
             </main>
         </Def>
     )

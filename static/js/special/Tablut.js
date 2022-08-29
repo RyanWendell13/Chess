@@ -1,5 +1,5 @@
 let pawn = new PieceInfo('Pawn',['/images/Pawn.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
-let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
+let branán = new PieceInfo('Branán',['/images/Branán.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
 
 let board
 let whitePieces =Array()
@@ -14,23 +14,49 @@ let playerTwoText = document.getElementById('PlayerTwoText')
 
 function Main(){
     board = CreateBoard(9,9)
+    board[Math.trunc(board.length/2)][Math.trunc(board.length/2)].color = 'Red'
+    board[Math.trunc(board.length/2)][Math.trunc(board.length/2)].element.style.backgroundColor = 'Red'
     Setup()
 }
 let ExclusiveMoveChecks = (piece,tile) => {
     CheckForCapture(piece,tile)
 }
 
+
 function SetupPieces(){
     //White Pieces
-    for(let i = 0; i < board.length; i++){
-        whitePieces.push(CreatePiece(pawn, 0, board[i][8], document.createElement('img')))
-    }
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)+1][Math.trunc(board[0].length/2)], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)+1], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)-1][Math.trunc(board[0].length/2)], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)-1], document.createElement('img')))
+
+
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)+2][Math.trunc(board[0].length/2)], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)+2], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)-2][Math.trunc(board[0].length/2)], document.createElement('img')))
+    blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)-2], document.createElement('img')))
+    blackPieces.push(CreatePiece(branán, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)], document.createElement('img')))
     
     //Black Pieces
-    for(let i = 0; i < board.length; i++){
-        blackPieces.push(CreatePiece(pawn, 0, board[i][0], document.createElement('img')))
-    }
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2-1)][0], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2+1)][0], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][0], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][1], document.createElement('img')))
 
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2-1)][board[0].length-1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2+1)][board[0].length-1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][board[0].length-1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][board[0].length-2], document.createElement('img')))
+
+    whitePieces.push(CreatePiece(pawn, 0, board[0][Math.trunc(board.length/2)-1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[0][Math.trunc(board.length/2)+1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[0][Math.trunc(board.length/2)], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[1][Math.trunc(board.length/2)], document.createElement('img')))
+
+    whitePieces.push(CreatePiece(pawn, 0, board[board[0].length-1][Math.trunc(board.length/2)-1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[board[0].length-1][Math.trunc(board.length/2)+1], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[board[0].length-1][Math.trunc(board.length/2)], document.createElement('img')))
+    whitePieces.push(CreatePiece(pawn, 0, board[board[0].length-2][Math.trunc(board.length/2)], document.createElement('img')))
 
     blackPieces.forEach(piece => {
         piece.element.style.filter = "brightness(60%)"
@@ -39,71 +65,183 @@ function SetupPieces(){
 
 
 function CheckForCapture(piece, tile){
-    console.log('running')
+
+    if(piece.info == branán && (IsInsideBoard(new Vector2(tile.pos.x+1,tile.pos.y+1)) == false || IsInsideBoard(new Vector2(tile.pos.x-1,tile.pos.y-1)) == false)){
+        Win()
+    }
+
     if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y+1].piece) == true){
         if(board[tile.pos.x][tile.pos.y+1].piece.info == pawn){
-
-            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
-
-                DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
+            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2))){
+                if((currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true||(board[tile.pos.x][tile.pos.y+2].color == 'Red' && (board[tile.pos.x][tile.pos.y+2].piece == null)))){
+                    DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
+                }
             }
         }
-        else if(board[tile.pos.x][tile.pos.y+1].piece.info == dux){
-            if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == false || board[tile.pos.x][tile.pos.y+2].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].piece != null)){
+        else if(board[tile.pos.x][tile.pos.y+1].piece.info == branán){ 
+            if(board[tile.pos.x][tile.pos.y+1].color != 'Red'){
+                if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == false || board[tile.pos.x][tile.pos.y+2].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].color != 'Red')){
+                    if(currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
+                        Win()
+                    }
+                }
+                else{
+                    let i = 0;
+                    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == true && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y+1].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y+1].piece) == true){
+                        i++
+                    }
 
-                Win()
+                    if (i >= 2)  {
+                        Win()
+                    }
+                }
+            }
+            else{
+                if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == true && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y+2].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y+1].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y+1].piece) == true)){
+                        Win()
+                }
             }
         }
     }
     if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x+1][tile.pos.y].piece) == true){
-   
         if(board[tile.pos.x+1][tile.pos.y].piece.info == pawn){
-       
-            if(IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
-           
-                DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
+            if(IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y))){
+                if((currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true||(board[tile.pos.x+2][tile.pos.y].color == 'Red' && board[tile.pos.x+2][tile.pos.y].piece == null))){
+                    DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
+                }
             }
         }
-        else if(board[tile.pos.x+1][tile.pos.y].piece.info == dux){
-            if((IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == false || board[tile.pos.x+2][tile.pos.y].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].piece != null)){
+        else if(board[tile.pos.x+1][tile.pos.y].piece.info == branán){ 
+            if(board[tile.pos.x+1][tile.pos.y].color != 'Red'){
+                if((IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == false || board[tile.pos.x+2][tile.pos.y].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].color != 'Red')){
+                    if(currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
+                        Win()
+                    }
+                }
+                else{
+                    let i = 0;
+                    if(IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == true && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y-1].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y+1].piece) == true){
+                        i++
+                    }
 
-                Win()
+                    if (i >= 2)  {
+                        Win()
+                    }
+                }
+            }
+            else{
+                if((IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == true && currentTeamPieces.includes(board[tile.pos.x+2][tile.pos.y].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y-1].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y+1].piece) == true)){
+                        Win()
+                }
             }
         }
     }
+    
     if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-1)) && currentEnemyPieces.includes(board[tile.pos.x][tile.pos.y-1].piece) == true){
    
         if(board[tile.pos.x][tile.pos.y-1].piece.info == pawn){
-            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
-                DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
+            if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2))){
+                if((currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true||(board[tile.pos.x][tile.pos.y-2].color == 'Red' && board[tile.pos.x][tile.pos.y-2].piece == null))){
+                    DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
+                }
             }
         }
-        else if(board[tile.pos.x][tile.pos.y-1].piece.info == dux){
-            if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == false || board[tile.pos.x][tile.pos.y-2].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].piece != null)){
+        else if(board[tile.pos.x][tile.pos.y-1].piece.info == branán){ 
+            if(board[tile.pos.x][tile.pos.y-1].color != 'Red'){
+                if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == false || board[tile.pos.x][tile.pos.y-2].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].color != 'Red')){
+                    if(currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
+                        Win()
+                    }
+                }
+                else{
+                    let i = 0;
+                    if(IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == true && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y-1].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y-1].piece) == true){
+                        i++
+                    }
 
-                Win()
+                    if (i >= 2)  {
+                        Win()
+                    }
+                }
+            }
+            else{
+                if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == true && currentTeamPieces.includes(board[tile.pos.x][tile.pos.y-2].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y-1].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x+1][tile.pos.y-1].piece) == true)){
+                        Win()
+                }
             }
         }
     }
     if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y)) && currentEnemyPieces.includes(board[tile.pos.x-1][tile.pos.y].piece) == true){
    
         if(board[tile.pos.x-1][tile.pos.y].piece.info == pawn){
-            if(IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
-           
-                DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
+            if(IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y))){
+                if((currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true||(board[tile.pos.x-2][tile.pos.y].color == 'Red' && board[tile.pos.x-2][tile.pos.y].piece == null))){
+                    DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
+                }
             }
         }
-        else if(board[tile.pos.x-1][tile.pos.y].piece.info == dux){
-            if((IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == false || board[tile.pos.x-2][tile.pos.y].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].piece != null)
-            && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].piece != null)){
-                Win()
+        else if(board[tile.pos.x-1][tile.pos.y].piece.info == branán){ 
+            if(board[tile.pos.x-1][tile.pos.y].color != 'Red'){
+                if((IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == false || board[tile.pos.x-2][tile.pos.y].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == false || board[tile.pos.x-1][tile.pos.y-1].color != 'Red')
+                    &&(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].color != 'Red')){
+                    if(currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
+                        Win()
+                    }
+                }
+                else{
+                    let i = 0;
+                    if(IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == true && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y-1].piece) == true){
+                        i++
+                    }
+                    if(IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y+1].piece) == true){
+                        i++
+                    }
+
+                    if (i >= 2)  {
+                        Win()
+                    }
+                }
+            }
+            else{
+                if((IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == true && currentTeamPieces.includes(board[tile.pos.x-2][tile.pos.y].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y-1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y-1].piece) == true)
+                    && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == true && currentTeamPieces.includes(board[tile.pos.x-1][tile.pos.y+1].piece) == true)){
+                        Win()
+                }
             }
         }
     }
@@ -121,7 +259,7 @@ let CalculatePossibleMoves = (piece, enemyPieces, colorTiles) => {
                 while(invalidMove == false){
                     for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                         newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
-                        if(IsInsideBoard(newPos) && invalidMove == false){
+                        if(IsInsideBoard(newPos)  && invalidMove == false){
                                 if(board[newPos.x][newPos.y].piece != null){
                                     invalidMove = true
                                 }
@@ -147,23 +285,22 @@ let CalculatePossibleMoves = (piece, enemyPieces, colorTiles) => {
                 for(let j = 0; j < piece.info.moves[i].iterators.length; j++){
                     newPos = new Vector2(newPos.x+piece.info.moves[i].iterators[j].x*GetTeamModifier(piece),newPos.y+piece.info.moves[i].iterators[j].y*GetTeamModifier(piece))
                         if(IsInsideBoard(newPos) && invalidMove == false){
-                                if(board[newPos.x][newPos.y].piece != null){
-                                    invalidMove = true
-                                }
-                                    
-                                else if (board[newPos.x][newPos.y].piece == null){
-                                    if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
-                                        if(colorTiles == true){
-                                            board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
-                                        }
-                                        tempMoves.push(board[newPos.x][newPos.y])
-                                    }  
-                                }
-                            
-                        }
-                        else{
+                        if(board[newPos.x][newPos.y].piece != null){
                             invalidMove = true
                         }
+                                    
+                        else if (board[newPos.x][newPos.y].piece == null){
+                            if(piece.info.moves[i].type == 'Standard'|| piece.info.moves[i].type == 'MoveOnly'){
+                                if(colorTiles == true){
+                                    board[newPos.x][newPos.y].element.style.backgroundColor = 'yellow'
+                                }
+                                tempMoves.push(board[newPos.x][newPos.y])
+                            }  
+                        }                        
+                    }
+                    else{
+                        invalidMove = true
+                    }
                 }
             }
         }
