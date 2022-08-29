@@ -3,7 +3,11 @@ let pawn = new PieceInfo('Pawn',['/images/Pawn.png'], 0, [new Move([new Vector2(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 let king = new PieceInfo('King',['/images/King.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
+=======
+let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 let dux = new PieceInfo('Dux',['/images/Dux.png', '/images/DuxVariation.png'], 0, [new Move([new Vector2(0,1)], 'MoveOnly', false, true, false),new Move([new Vector2(1,0)], 'MoveOnly', false, true, false), new Move([new Vector2(0,-1)], 'MoveOnly', false, true, false),new Move([new Vector2(-1,0)], 'MoveOnly', false, true, false)])
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
@@ -42,6 +46,7 @@ function SetupPieces(){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)+1][Math.trunc(board[0].length/2)], document.createElement('img')))
     blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)+1], document.createElement('img')))
     blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)-1][Math.trunc(board[0].length/2)], document.createElement('img')))
@@ -53,6 +58,11 @@ function SetupPieces(){
     blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)-2][Math.trunc(board[0].length/2)], document.createElement('img')))
     blackPieces.push(CreatePiece(pawn, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)-2], document.createElement('img')))
     blackPieces.push(CreatePiece(king, 0, board[Math.trunc(board.length/2)][Math.trunc(board[0].length/2)], document.createElement('img')))
+=======
+    for(let i = 0; i < board.length; i++){
+        whitePieces.push(CreatePiece(pawn, 0, board[i][8], document.createElement('img')))
+    }
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
     for(let i = 0; i < board.length; i++){
         whitePieces.push(CreatePiece(pawn, 0, board[i][8], document.createElement('img')))
@@ -91,11 +101,15 @@ function CheckForCapture(piece, tile){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     if(piece.info == king && (IsInsideBoard(new Vector2(tile.pos.x+1,tile.pos.y+1)) == false || IsInsideBoard(new Vector2(tile.pos.x-1,tile.pos.y-1)) == false)){
         Win()
     }
 
+=======
+    console.log('running')
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
     console.log('running')
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
@@ -116,6 +130,7 @@ function CheckForCapture(piece, tile){
                 DeletePiece(board[tile.pos.x][tile.pos.y+1].piece)
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -147,6 +162,8 @@ function CheckForCapture(piece, tile){
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
         else if(board[tile.pos.x][tile.pos.y+1].piece.info == dux){
             if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y+2)) == false || board[tile.pos.x][tile.pos.y+2].piece != null)
             && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
@@ -154,6 +171,9 @@ function CheckForCapture(piece, tile){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
@@ -175,6 +195,7 @@ function CheckForCapture(piece, tile){
                 DeletePiece(board[tile.pos.x+1][tile.pos.y].piece)
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -206,6 +227,8 @@ function CheckForCapture(piece, tile){
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
         else if(board[tile.pos.x+1][tile.pos.y].piece.info == dux){
             if((IsInsideBoard(new Vector2(tile.pos.x+2, tile.pos.y)) == false || board[tile.pos.x+2][tile.pos.y].piece != null)
             && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y+1)) == false || board[tile.pos.x+1][tile.pos.y+1].piece != null)
@@ -213,6 +236,9 @@ function CheckForCapture(piece, tile){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
@@ -232,6 +258,7 @@ function CheckForCapture(piece, tile){
                 DeletePiece(board[tile.pos.x][tile.pos.y-1].piece)
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -263,6 +290,8 @@ function CheckForCapture(piece, tile){
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
         else if(board[tile.pos.x][tile.pos.y-1].piece.info == dux){
             if((IsInsideBoard(new Vector2(tile.pos.x, tile.pos.y-2)) == false || board[tile.pos.x][tile.pos.y-2].piece != null)
             && (IsInsideBoard(new Vector2(tile.pos.x+1, tile.pos.y-1)) == false || board[tile.pos.x+1][tile.pos.y-1].piece != null)
@@ -270,6 +299,9 @@ function CheckForCapture(piece, tile){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
@@ -290,6 +322,7 @@ function CheckForCapture(piece, tile){
                 DeletePiece(board[tile.pos.x-1][tile.pos.y].piece)
             }
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -333,6 +366,8 @@ function CheckForCapture(piece, tile){
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
         else if(board[tile.pos.x-1][tile.pos.y].piece.info == dux){
             if((IsInsideBoard(new Vector2(tile.pos.x-2, tile.pos.y)) == false || board[tile.pos.x-2][tile.pos.y].piece != null)
             && (IsInsideBoard(new Vector2(tile.pos.x-1, tile.pos.y+1)) == false || board[tile.pos.x-1][tile.pos.y+1].piece != null)
@@ -341,6 +376,9 @@ function CheckForCapture(piece, tile){
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
+=======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
 =======
 >>>>>>> parent of 147cc9c (Changed home display, Completed Tablut and Brandubh except for one special rule)
